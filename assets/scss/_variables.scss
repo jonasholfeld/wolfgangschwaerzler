@@ -1,0 +1,10 @@
+@mixin text {
+    font-family: Graebenbach, sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    @include mobile {
+        font-size: 3.8rem;
+    }
+}
+
+$mobileSymbol: 4.9rem;

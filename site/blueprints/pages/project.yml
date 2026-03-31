@@ -1,0 +1,56 @@
+title: Project
+
+tabs:
+  info:
+    label: Info
+    columns:
+      infoMain:
+        width: 1/1
+        sections:
+          infoFields:
+            type: fields
+            fields:
+              infotext:
+                label: Infotext
+                extends: fields/inlinewriter
+              media:
+                label: Media
+                extends: fields/inlinewriter
+  slideshow:
+    label: Slideshow
+    columns:
+      slideshowMain:
+        width: 1/1
+        sections:
+          slideshowFields:
+            type: fields
+            fields:
+              slideshowimages:
+                label: Slideshow Images
+                type: files
+                translate: false
+                layout: cards
+  index:
+    label: Index
+    columns:
+      indexMain:
+        width: 1/1
+        sections:
+          indexFields:
+            type: fields
+            fields:
+              indexobjects:
+                label: Index Objects
+                type: structure
+                translate: false
+                fields:
+                  coverimage:
+                    label: Cover Image
+                    type: files
+                    multiple: false
+                  indexmedia:
+                    label: Index Media Text Deutsch
+                    extends: fields/inlinewriter
+                  indexmediaen:
+                    label: Index Media Text English
+                    extends: fields/inlinewriter

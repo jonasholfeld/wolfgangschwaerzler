@@ -1,0 +1,17 @@
+title: About
+
+columns:
+  main:
+    width: 1/1
+    sections:
+      fields:
+        type: fields
+        fields:
+          abouttext:
+            label: About Text
+            type: writer
+            inline: true
+          imprint:
+            label: Imprint
+            type: writer
+            inline: true
