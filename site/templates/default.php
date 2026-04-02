@@ -154,7 +154,6 @@ $viewPath = function (string $view, $language): string {
                         <div class="index-card__meta-box">
                             <div class="index-card__text"><?= $indexObject->indexmedia()->kt() ?></div>
                         </div>
-                        <div class="index-card__meta-fill" aria-hidden="true"></div>
                     </div>
                 </article>
                 <?php endforeach ?>
