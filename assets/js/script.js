@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const validViews = ['about', 'home', 'index'];
-    const currentLanguage = document.documentElement.lang || 'de';
+    const currentLanguage = document.documentElement.lang || 'en';
     const navLinks = document.querySelectorAll('[data-view-link]');
     const languageLinks = document.querySelectorAll('[data-lang-code]');
     const primaryLink = document.querySelector('[data-primary-link]');
     const secondaryLink = document.querySelector('[data-secondary-link]');
-    const prefixForLanguage = (languageCode) => (languageCode === 'de' ? '' : `/${languageCode}`);
+    const prefixForLanguage = (languageCode) => (languageCode === 'en' ? '' : `/${languageCode}`);
     const languagePrefix = prefixForLanguage(currentLanguage);
 
     const viewFromPath = (pathname) => {

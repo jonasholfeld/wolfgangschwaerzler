@@ -3,6 +3,7 @@ $aboutPage = page('about');
 $projectsPage = page('projects');
 $language = $kirby->language();
 $languages = $kirby->languages();
+
 $requestPath = trim($kirby->request()->path()->toString(), '/');
 $pathWithoutLanguage = $requestPath;
 
@@ -61,19 +62,23 @@ $viewPath = function (string $view, $language): string {
                 data-view-link="<?= $initialView === 'index' ? 'home' : 'index' ?>"
             ><?= $initialView === 'index' ? 'Close' : 'Index' ?></a>
             <div class="site-nav__languages" aria-label="Language switch">
-                <?php foreach ($languages as $navLanguage): ?>
-                <?php
-                $switchUrl = $viewPath($initialView, $navLanguage);
-                ?>
-                <?php if ($navLanguage->code() === $language->code()) continue ?>
+                <?php if ($language->code() === 'en'): ?>
+                <a
+                    class="site-nav__language internal-link abc"
+                    href="/de"
+                    data-lang-code="de"
+                    hreflang="de"
+                    lang="de"
+                >DE</a>
+                <?php else: ?>
                 <a
                     class="site-nav__language internal-link"
-                    href="<?= $switchUrl ?>"
-                    data-lang-code="<?= $navLanguage->code() ?>"
-                    hreflang="<?= $navLanguage->code() ?>"
-                    lang="<?= $navLanguage->code() ?>"
-                ><?= strtoupper($navLanguage->code()) ?></a>
-                <?php endforeach ?>
+                    href="/"
+                    data-lang-code="en"
+                    hreflang="en"
+                    lang="en"
+                >EN</a>
+                <?php endif ?>
             </div>
         </div>
     </nav>

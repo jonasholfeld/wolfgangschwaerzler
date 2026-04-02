@@ -12,8 +12,8 @@ Media: Posters, catalogue, exhibition design, and variousmedia adaptions, 2025â€
 
 Slideshowimages:
 
-- file://uxocdymjxpnauizg
-- file://qet1nvdt3eprsy5q
+- file://kikcazdykzqfo2gj
+- file://dxbmd95wvkujqrlc
 
 ----
 
@@ -21,16 +21,18 @@ Indexobjects:
 
 - 
   coverimage:
-    - file://qet1nvdt3eprsy5q
+    - file://dxbmd95wvkujqrlc
   indexmedia: >
     Posters, catalogue, exhibition design,
     and various media adaptions, 2025â€“2026
+  indexmediaen: ""
 - 
   coverimage:
-    - file://uxocdymjxpnauizg
+    - file://kikcazdykzqfo2gj
   indexmedia: >
     Posters, catalogue, exhibition design,
     and various media adaptions
+  indexmediaen: ""
 
 ----
 
