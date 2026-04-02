@@ -134,20 +134,27 @@ $viewPath = function (string $view, $language): string {
                 <?php foreach ($project->indexobjects()->toStructure() as $indexObject): ?>
                 <?php $indexImage = $indexObject->coverimage()->toFiles()->first(); ?>
                 <article class="index-card">
-                    <?php if ($indexImage): ?>
                     <figure class="index-card__image-wrap">
+                        <?php if ($indexImage): ?>
                         <img
                             class="index-card__image"
                             src="<?= $indexImage->url() ?>"
                             alt="<?= esc($indexImage->alt()->or($project->title())->value()) ?>"
                             loading="lazy"
                         >
+                        <?php endif ?>
                     </figure>
-                    <?php endif ?>
                     <div class="index-card__meta">
-                        <h2 class="index-card__title"><?= $project->title()->escape() ?></h2>
-                        <div class="index-card__text"><?= $project->infotext()->kt() ?></div>
-                        <div class="index-card__text"><?= $indexObject->indexmedia()->kt() ?></div>
+                        <div class="index-card__meta-box">
+                            <h2 class="index-card__title"><?= $project->title()->escape() ?></h2>
+                        </div>
+                        <div class="index-card__meta-box">
+                            <div class="index-card__text"><?= $project->infotext()->kt() ?></div>
+                        </div>
+                        <div class="index-card__meta-box">
+                            <div class="index-card__text"><?= $indexObject->indexmedia()->kt() ?></div>
+                        </div>
+                        <div class="index-card__meta-fill" aria-hidden="true"></div>
                     </div>
                 </article>
                 <?php endforeach ?>

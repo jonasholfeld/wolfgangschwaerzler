@@ -165,9 +165,14 @@ body {
     width: 100vw;
 }
 
+.panel--home {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
 .panel__inner {
     min-height: 100%;
-    padding: var(--page-padding);
+    // padding: var(--page-padding);
 }
 
 .panel__block,
@@ -182,12 +187,15 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
+    overflow: hidden;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .panel--about .panel__block,
 .project-card__meta-box,
-.index-card__meta {
+.index-card__meta-box,
+.index-card__meta-fill {
     background: var(--panel-box-bg);
     color: var(--panel-box-text);
     padding: 0.5rem;
@@ -198,11 +206,13 @@ body {
     flex-wrap: nowrap;
     gap: 1vw;
     overflow-x: hidden;
+    align-items: flex-start;
+    padding-left: var(--page-padding);
 }
 
 .project-card__meta-box {
-    flex: 0 0 20vw;
-    width: 20vw;
+    flex: 0 0 23vw;
+    width: 23vw;
 }
 
 .panel__block:last-child,
@@ -253,10 +263,13 @@ body {
     flex-wrap: nowrap;
     align-items: flex-start;
     align-content: flex-start;
-    flex: 1 0 auto;
+    flex: 0 0 calc(90vh - 3rem);
     gap: var(--panel-gap);
     margin-bottom: 0.8rem;
-    overflow-x: hidden;
+    overflow: scroll;
+    align-items: end;
+    max-height: calc(90vh - 3rem);
+    padding-left: var(--page-padding);
 }
 
 .project-card__image-wrap,
@@ -286,25 +299,48 @@ body {
 
 .index-card__image {
     display: block;
-    width: auto;
-    max-width: min(28rem, calc(100vw - 2rem));
-    max-height: 70vh;
-    margin-bottom: 0.8rem;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
 }
 
 .panel--index .panel__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--panel-gap);
+    align-items: start;
 }
 
 .index-card {
-    width: calc(50% - (var(--panel-gap) / 2));
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.index-card__image-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.index-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.index-card__meta-fill {
+    min-height: 2rem;
 }
 
 .index-card__text {
-    max-width: 28rem;
+    max-width: none;
 }
 
 main {
@@ -378,6 +414,14 @@ main {
     .index-card {
         max-width: 100%;
         width: 100%;
+    }
+
+    .panel--index .panel__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .index-card__image {
+        max-width: 100%;
     }
 
     .project-card__image--portrait {
