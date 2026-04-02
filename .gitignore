@@ -49,4 +49,5 @@ Icon
 
 /site/config/.license
 content/*
-Makefileassets/css/default.css
+Makefile
+assets/css/default.css
