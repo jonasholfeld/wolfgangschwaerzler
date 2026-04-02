@@ -21,6 +21,7 @@ body {
     font-family: 'Graebenbach', sans-serif;
     font-weight: 400;
     font-variation-settings: 'wght' 400;
+    font-feature-settings: "ss10";
     font-style: normal;
     font-size: 1.2rem;
     @include desktop {
