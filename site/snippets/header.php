@@ -7,6 +7,9 @@
     <title><?= $page->title() . ' | ' . $site->title() ?></title>
 
     <?php snippet('scss'); ?>
+    <?php if ($site->css()->isNotEmpty()): ?>
+    <style><?= $site->css()->value() ?></style>
+    <?php endif ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body class="<?= $bodyclass ?? '' ?>">

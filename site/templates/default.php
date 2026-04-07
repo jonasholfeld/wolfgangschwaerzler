@@ -41,7 +41,7 @@ $viewPath = function (string $view, $language): string {
     <nav class="site-nav" aria-label="Main navigation">
         <div class="site-nav__side">
             <a
-                class="site-nav__link internal-link"
+                class="site-nav__link internal-link black-text-box"
                 href="<?= $viewPath($initialView === 'about' ? 'home' : 'about', $language) ?>"
                 data-primary-link
                 data-about-label="About"
@@ -52,7 +52,7 @@ $viewPath = function (string $view, $language): string {
         </div>
         <div class="site-nav__side site-nav__side--right">
             <a
-                class="site-nav__link internal-link"
+                class="site-nav__link internal-link black-text-box"
                 href="<?= $viewPath($initialView === 'index' ? 'home' : 'index', $language) ?>"
                 data-secondary-link
                 data-index-label="Index"
@@ -64,7 +64,7 @@ $viewPath = function (string $view, $language): string {
             <div class="site-nav__languages" aria-label="Language switch">
                 <?php if ($language->code() === 'en'): ?>
                 <a
-                    class="site-nav__language internal-link abc"
+                    class="site-nav__language internal-link abc black-text-box"
                     href="/de"
                     data-lang-code="de"
                     hreflang="de"
@@ -72,7 +72,7 @@ $viewPath = function (string $view, $language): string {
                 >DE</a>
                 <?php else: ?>
                 <a
-                    class="site-nav__language internal-link"
+                    class="site-nav__language internal-link black-text-box"
                     href="/"
                     data-lang-code="en"
                     hreflang="en"

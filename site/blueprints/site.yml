@@ -1,5 +1,19 @@
 title: Site
 
-sections:
-  pages:
-    type: pages
+tabs:
+  content:
+    label: Content
+    sections:
+      pages:
+        type: pages
+  css:
+    label: CSS
+    sections:
+      fields:
+        type: fields
+        fields:
+          css:
+            type: csslint
+            label: Custom CSS
+            buttons: false
+            spellcheck: false

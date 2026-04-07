@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // On input change of index-search, filter all .index-card elements by their data-title attribute
+    const indexSearch = document.querySelector('#index-search');
+
+    if (indexSearch) {
+        indexSearch.addEventListener('input', (event) => {
+            const searchTerm = event.currentTarget.value.toLowerCase();
+            const indexCards = document.querySelectorAll('.index-card');
+
+            indexCards.forEach((card) => {
+                const title = card.dataset.title || '';
+                const matches = title.toLowerCase().includes(searchTerm);
+
+                card.hidden = matches === false;
+            });
+        });
+    }
+
     const shell = document.querySelector('.site-shell');
 
     if (!shell) {
@@ -112,6 +129,114 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (primaryLink) {
         primaryLink.addEventListener('click', handleViewLinkClick);
+    }
+
+    const slideshowFrames = document.querySelectorAll('.project-card__slideshow-frame');
+
+    const slideshowItems = (slideshow) => Array.from(slideshow.querySelectorAll('[data-slideshow-item]'));
+
+    const slideshowAlignmentLeft = (slideshow) => {
+        const styles = window.getComputedStyle(slideshow);
+        const paddingLeft = Number.parseFloat(styles.paddingLeft) || 0;
+
+        return slideshow.getBoundingClientRect().left + paddingLeft;
+    };
+
+    const activeSlideshowIndex = (slideshow) => {
+        const items = slideshowItems(slideshow);
+
+        if (items.length === 0) {
+            return -1;
+        }
+
+        const alignmentLeft = slideshowAlignmentLeft(slideshow);
+        let activeIndex = 0;
+        let smallestDistance = Number.POSITIVE_INFINITY;
+
+        items.forEach((item, index) => {
+            const distance = Math.abs(item.getBoundingClientRect().left - alignmentLeft);
+
+            if (distance < smallestDistance) {
+                smallestDistance = distance;
+                activeIndex = index;
+            }
+        });
+
+        return activeIndex;
+    };
+
+    const scrollSlideshowToIndex = (slideshow, index) => {
+        const items = slideshowItems(slideshow);
+        const targetItem = items[index];
+
+        if (!targetItem) {
+            return;
+        }
+
+        const alignmentLeft = slideshowAlignmentLeft(slideshow);
+        const targetLeft = slideshow.scrollLeft + (targetItem.getBoundingClientRect().left - alignmentLeft);
+
+        slideshow.scrollTo({
+            left: targetLeft,
+            behavior: 'smooth',
+        });
+    };
+
+    slideshowFrames.forEach((frame) => {
+        const slideshow = frame.querySelector('[data-slideshow]');
+        const controls = frame.querySelectorAll('[data-slideshow-direction]');
+
+        if (!slideshow || controls.length === 0) {
+            return;
+        }
+
+        controls.forEach((control) => {
+            control.addEventListener('click', () => {
+                const direction = Number.parseInt(control.dataset.slideshowDirection || '0', 10);
+                const currentIndex = activeSlideshowIndex(slideshow);
+                const items = slideshowItems(slideshow);
+
+                if (currentIndex === -1 || direction === 0 || items.length === 0) {
+                    return;
+                }
+
+                const nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + direction));
+
+                if (nextIndex === currentIndex) {
+                    return;
+                }
+
+                scrollSlideshowToIndex(slideshow, nextIndex);
+            });
+        });
+    });
+
+    const indexFilter = document.querySelector('[data-index-filter]');
+
+    if (indexFilter) {
+        const filterButtons = Array.from(indexFilter.querySelectorAll('[data-index-filter-button]'));
+        const indexItems = Array.from(document.querySelectorAll('[data-index-item]'));
+
+        const applyIndexFilter = (category) => {
+            filterButtons.forEach((button) => {
+                button.classList.toggle('is-active', button.dataset.categoryFilter === category);
+            });
+
+            indexItems.forEach((item) => {
+                const itemCategory = item.dataset.category || '';
+                const matches = category === 'all' || itemCategory === category;
+
+                item.hidden = matches === false;
+            });
+        };
+
+        filterButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                applyIndexFilter(button.dataset.categoryFilter || 'all');
+            });
+        });
+
+        applyIndexFilter('all');
     }
 
     window.addEventListener('popstate', (event) => {
