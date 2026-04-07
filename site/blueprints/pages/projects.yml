@@ -1,9 +1,23 @@
 title: Projects
 
-sections:
-  projects:
-    type: pages
-    label: Projects
-    template: project
-    layout: cards
-    search: true
+columns:
+  left:
+    width: 1/2
+    sections:
+      categories:
+        width: 1/2
+        type: pages
+        label: Categories
+        template: category
+        layout: list
+        search: true
+  right:
+    width: 1/2
+    sections:
+      projects:
+          width: 1/2
+          type: pages
+          label: Projects
+          template: project
+          layout: list
+          search: true

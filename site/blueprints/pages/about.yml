@@ -9,9 +9,7 @@ columns:
         fields:
           abouttext:
             label: About Text
-            type: writer
-            inline: true
+            extends: fields/inlinewriter
           imprint:
             label: Imprint
-            type: writer
-            inline: true
+            extends: fields/inlinewriter

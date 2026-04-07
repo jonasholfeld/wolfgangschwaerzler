@@ -30,6 +30,7 @@ tabs:
                 type: files
                 translate: false
                 layout: cards
+                uploads: slideshowimage
   index:
     label: Index
     columns:
@@ -54,3 +55,12 @@ tabs:
                   indexmediaen:
                     label: Index Media Text English
                     extends: fields/inlinewriter
+                  category:
+                    label: Category
+                    type: select
+                    placeholder: Select a category
+                    options:
+                      type: query
+                      query: page.parent.children.filterBy("intendedTemplate", "category")
+                      text: "{{ page.title }}"
+                      value: "{{ page.uuid }}"

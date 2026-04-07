@@ -1,6 +1,5 @@
 type: writer
 inline: true
-nodes: false
-marks: false
+buttons: false
 toolbar:
   inline: false

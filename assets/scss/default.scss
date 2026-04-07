@@ -282,18 +282,20 @@ body {
 }
 
 .project-card__image {
+    --slideshow-image-height: 100;
     display: block;
     width: auto;
     height: auto;
+    max-height: calc(var(--slideshow-image-height) * 0.82vh);
     object-fit: contain;
 }
 
 .project-card__image--landscape {
-    width: 70vw;
+    // width: 70vw;
 }
 
 .project-card__image--portrait {
-    height: 80vh;
+    height: calc(var(--slideshow-image-height) * 0.82vh);
     max-width: 100%;
 }
 
@@ -425,7 +427,7 @@ main {
     }
 
     .project-card__image--portrait {
-        height: 80vh;
+        height: calc(var(--slideshow-image-height) * 0.82vh);
         width: auto;
     }
 }

@@ -1,0 +1,13 @@
+title: Slideshow Image
+
+accept:
+  type: image
+
+fields:
+  height:
+    label: Height
+    type: number
+    min: 0
+    max: 100
+    step: 1
+    default: 100
