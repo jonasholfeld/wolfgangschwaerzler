@@ -1,9 +1,0 @@
-Height: 100
-
-----
-
-Uuid: hosdxosay1azjing
-
-----
-
-Template: slideshowimage

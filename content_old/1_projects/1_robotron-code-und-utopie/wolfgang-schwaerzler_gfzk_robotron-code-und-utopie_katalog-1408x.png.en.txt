@@ -1,9 +1,0 @@
-Height: 80
-
-----
-
-Uuid: k1g2p93rnetqjbcx
-
-----
-
-Template: slideshowimage
