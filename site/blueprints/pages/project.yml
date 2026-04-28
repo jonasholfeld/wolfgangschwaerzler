@@ -57,7 +57,7 @@ tabs:
                     extends: fields/inlinewriter
                   category:
                     label: Category
-                    type: select
+                    type: multiselect
                     placeholder: Select a category
                     options:
                       type: query

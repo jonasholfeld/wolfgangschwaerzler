@@ -1,0 +1,13 @@
+Height: 50
+
+----
+
+Poster: 
+
+----
+
+Uuid: s8phwtiwkqxuakdw
+
+----
+
+Template: slideshowimage

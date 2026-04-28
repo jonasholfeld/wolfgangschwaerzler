@@ -1,0 +1,9 @@
+Height: 100
+
+----
+
+Uuid: ju3nt8dkv2cfniv2
+
+----
+
+Template: slideshowimage

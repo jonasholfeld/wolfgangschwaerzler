@@ -1,0 +1,9 @@
+Height: 100
+
+----
+
+Uuid: 74mqouotuvwxrvor
+
+----
+
+Template: slideshowimage

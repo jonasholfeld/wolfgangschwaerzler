@@ -18,7 +18,8 @@
         <?php foreach ($projectsPage?->children()->template('project')->listed() ?? [] as $project): ?>
         <?php foreach ($project->indexobjects()->toStructure() as $indexObject): ?>
         <?php $indexImage = $indexObject->coverimage()->toFiles()->first(); ?>
-        <article class="index-card" data-index-item data-category="<?= esc($indexObject->category()->value()) ?>" data-title="<?= esc($project->title()->value()) ?>" >
+        <?php $indexCategories = array_values(array_filter((array) $indexObject->category()->toData())); ?>
+        <article class="index-card" data-index-item data-categories="<?= esc(implode('|', $indexCategories)) ?>" data-title="<?= esc($project->title()->value()) ?>" >
             <figure class="index-card__image-wrap">
                 <?php if ($indexImage): ?>
                 <img

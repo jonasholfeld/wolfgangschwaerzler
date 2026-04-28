@@ -16,6 +16,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const imprintBlock = document.querySelector('.panel__block--imprint');
+    const imprintHeading = imprintBlock?.querySelector('.panel__subheading');
+    const imprintText = imprintBlock?.querySelector('.panel__text');
+
+    if (imprintHeading && imprintText) {
+        let isImprintOpen = false;
+
+        imprintHeading.addEventListener('click', () => {
+            if (isImprintOpen) {
+                imprintText.style.height = `${imprintText.scrollHeight}px`;
+                window.requestAnimationFrame(() => {
+                    imprintText.style.height = '0px';
+                });
+            } else {
+                imprintText.style.height = `${imprintText.scrollHeight}px`;
+            }
+
+            isImprintOpen = !isImprintOpen;
+        });
+
+        imprintText.addEventListener('transitionend', (event) => {
+            if (event.propertyName !== 'height') {
+                return;
+            }
+
+            imprintText.style.height = isImprintOpen ? 'auto' : '0px';
+        });
+    }
+
     const shell = document.querySelector('.site-shell');
 
     if (!shell) {
@@ -185,10 +214,35 @@ document.addEventListener('DOMContentLoaded', () => {
     slideshowFrames.forEach((frame) => {
         const slideshow = frame.querySelector('[data-slideshow]');
         const controls = frame.querySelectorAll('[data-slideshow-direction]');
+        const counter = frame.closest('.project-card')?.querySelector('[data-slideshow-counter]');
+
+        const updateCounter = () => {
+            if (!counter) {
+                return;
+            }
+
+            const items = slideshowItems(slideshow);
+            const total = items.length;
+
+            if (total === 0) {
+                counter.textContent = '0/0';
+                return;
+            }
+
+            const currentIndex = activeSlideshowIndex(slideshow);
+            const currentSlide = currentIndex >= 0 ? currentIndex + 1 : 1;
+
+            counter.textContent = `${currentSlide}/${total}`;
+        };
 
         if (!slideshow || controls.length === 0) {
             return;
         }
+
+        updateCounter();
+
+        slideshow.addEventListener('scroll', updateCounter, { passive: true });
+        window.addEventListener('resize', updateCounter);
 
         controls.forEach((control) => {
             control.addEventListener('click', () => {
@@ -207,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 scrollSlideshowToIndex(slideshow, nextIndex);
+                window.setTimeout(updateCounter, 300);
             });
         });
     });
@@ -216,6 +271,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (indexFilter) {
         const filterButtons = Array.from(indexFilter.querySelectorAll('[data-index-filter-button]'));
         const indexItems = Array.from(document.querySelectorAll('[data-index-item]'));
+        const scrollContainer = indexFilter.closest('.panel--index');
+        let lastScrollY = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+        let ticking = false;
+        const minScrollDelta = 8;
+        let isScrollingDown = false;
+        let isPointerNearTop = false;
+        const pointerRevealThreshold = window.innerWidth * 0.03;
+
+        const applyFilterVisibility = (currentScrollY) => {
+            const nearTop = currentScrollY <= 8;
+            const shouldHide = isScrollingDown && !nearTop && !isPointerNearTop;
+
+            indexFilter.classList.toggle('is-hidden', shouldHide);
+        };
 
         const applyIndexFilter = (category) => {
             filterButtons.forEach((button) => {
@@ -223,8 +292,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             indexItems.forEach((item) => {
-                const itemCategory = item.dataset.category || '';
-                const matches = category === 'all' || itemCategory === category;
+                const itemCategories = (item.dataset.categories || '')
+                    .split('|')
+                    .map((value) => value.trim())
+                    .filter((value) => value.length > 0);
+                const matches = category === 'all' || itemCategories.includes(category);
 
                 item.hidden = matches === false;
             });
@@ -237,6 +309,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         applyIndexFilter('all');
+
+        const updateFilterVisibility = () => {
+            const currentScrollY = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+            const delta = currentScrollY - lastScrollY;
+
+            if (Math.abs(delta) >= minScrollDelta) {
+                isScrollingDown = delta > 0;
+                lastScrollY = currentScrollY;
+            }
+
+            applyFilterVisibility(currentScrollY);
+            ticking = false;
+        };
+
+        const handleScroll = () => {
+            if (ticking) {
+                return;
+            }
+
+            ticking = true;
+            window.requestAnimationFrame(updateFilterVisibility);
+        };
+
+        if (scrollContainer) {
+            scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+        } else {
+            window.addEventListener('scroll', handleScroll, { passive: true });
+        }
+
+        window.addEventListener('mousemove', (event) => {
+            isPointerNearTop = event.clientY <= pointerRevealThreshold;
+            const currentScrollY = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+            applyFilterVisibility(currentScrollY);
+        }, { passive: true });
     }
 
     window.addEventListener('popstate', (event) => {

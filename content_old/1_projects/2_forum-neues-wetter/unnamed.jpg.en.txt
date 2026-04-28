@@ -1,0 +1,9 @@
+Height: 80
+
+----
+
+Uuid: gnqqszqpcf9fflop
+
+----
+
+Template: slideshowimage

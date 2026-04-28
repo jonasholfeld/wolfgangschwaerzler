@@ -1,0 +1,9 @@
+Height: 100
+
+----
+
+Uuid: kmspatjrcxkrb61i
+
+----
+
+Template: slideshowimage

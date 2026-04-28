@@ -29,6 +29,23 @@ $viewPath = function (string $view, $language): string {
         default => $prefix . '/',
     };
 };
+
+$t = function (string $key, string $default) use ($translations, $lang): string {
+    $label = $translations[$key][$lang] ?? $translations[$key]['en'] ?? $default;
+
+    if ($label === '') {
+        return $label;
+    }
+
+    $first = mb_substr($label, 0, 1, 'UTF-8');
+    $rest = mb_substr($label, 1, null, 'UTF-8');
+
+    return mb_strtoupper($first, 'UTF-8') . $rest;
+};
+
+$aboutLabel = $aboutPage?->title()->value() ?? $t('about', 'About');
+$indexLabel = $t('index', 'Index');
+$closeLabel = $t('close', 'Close');
 ?>
 <?= snippet('header') ?>
 <main
@@ -44,23 +61,23 @@ $viewPath = function (string $view, $language): string {
                 class="site-nav__link internal-link black-text-box"
                 href="<?= $viewPath($initialView === 'about' ? 'home' : 'about', $language) ?>"
                 data-primary-link
-                data-about-label="About"
-                data-close-label="Close"
+                data-about-label="<?= esc($aboutLabel) ?>"
+                data-close-label="<?= esc($closeLabel) ?>"
                 data-about-view="about"
                 data-close-view="home"
-            ><?= $initialView === 'about' ? 'Close' : 'About' ?></a>
+            ><?= $initialView === 'about' ? $closeLabel : $aboutLabel ?></a>
         </div>
         <div class="site-nav__side site-nav__side--right">
             <a
                 class="site-nav__link internal-link black-text-box"
                 href="<?= $viewPath($initialView === 'index' ? 'home' : 'index', $language) ?>"
                 data-secondary-link
-                data-index-label="Index"
-                data-close-label="Close"
+                data-index-label="<?= esc($indexLabel) ?>"
+                data-close-label="<?= esc($closeLabel) ?>"
                 data-index-view="index"
                 data-close-view="home"
                 data-view-link="<?= $initialView === 'index' ? 'home' : 'index' ?>"
-            ><?= $initialView === 'index' ? 'Close' : 'Index' ?></a>
+            ><?= $initialView === 'index' ? $closeLabel : $indexLabel ?></a>
             <div class="site-nav__languages" aria-label="Language switch">
                 <?php if ($language->code() === 'en'): ?>
                 <a

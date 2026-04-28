@@ -1,0 +1,9 @@
+Height: 90
+
+----
+
+Uuid: tkb9nqxcjo6kvfip
+
+----
+
+Template: slideshowimage

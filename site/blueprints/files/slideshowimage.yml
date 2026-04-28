@@ -1,8 +1,5 @@
 title: Slideshow Image
 
-accept:
-  type: image
-
 fields:
   height:
     label: Height
@@ -11,3 +8,9 @@ fields:
     max: 100
     step: 1
     default: 100
+  poster:
+    label: Video Poster
+    type: files
+    multiple: false
+    query: page.images
+    help: Optional still image shown before a video starts playing.

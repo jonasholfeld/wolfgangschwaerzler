@@ -1,0 +1,34 @@
+title: Translations
+
+columns:
+  main:
+    width: 1/1
+    sections:
+      fields:
+        type: fields
+        fields:
+          navAbout:
+            label: Navigation: About
+            type: text
+            width: 1/3
+            default: About
+          navIndex:
+            label: Navigation: Index
+            type: text
+            width: 1/3
+            default: Index
+          navClose:
+            label: Navigation: Close
+            type: text
+            width: 1/3
+            default: Close
+          navMainAria:
+            label: ARIA: Main navigation
+            type: text
+            width: 1/2
+            default: Main navigation
+          navLanguageAria:
+            label: ARIA: Language switch
+            type: text
+            width: 1/2
+            default: Language switch

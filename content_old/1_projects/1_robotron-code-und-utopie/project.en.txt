@@ -1,0 +1,47 @@
+Title: Robotron. Code und Utopie
+
+----
+
+Infotext: Visual identity for an exhibition at GfZK – Museum ofContemporary Art Leipzig
+
+----
+
+Media: Posters, catalogue, exhibition design, and variousmedia adaptions, 2025–2026
+
+----
+
+Slideshowimages:
+
+- file://s8phwtiwkqxuakdw
+- file://yotzogbc4lfr6fbu
+- file://hosdxosay1azjing
+- file://tkb9nqxcjo6kvfip
+- file://k1g2p93rnetqjbcx
+- file://74mqouotuvwxrvor
+- file://kmspatjrcxkrb61i
+- file://ju3nt8dkv2cfniv2
+
+----
+
+Indexobjects:
+
+- 
+  coverimage:
+    - file://hosdxosay1azjing
+  indexmedia: >
+    Posters, catalogue, exhibition design,
+    and various media adaptions, 2025–2026
+  indexmediaen: ""
+  category: page://6e6uigtjpor8kxit
+- 
+  coverimage:
+    - file://tkb9nqxcjo6kvfip
+  indexmedia: >
+    Posters, catalogue, exhibition design,
+    and various media adaptions
+  indexmediaen: ""
+  category: page://zsq6f3rpllrhufvd
+
+----
+
+Uuid: 6i04owokhe54jlsl

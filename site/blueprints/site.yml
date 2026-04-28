@@ -17,3 +17,20 @@ tabs:
             label: Custom CSS
             buttons: false
             spellcheck: false
+            translate: false
+  translations:
+    label: Translations
+    sections:
+      fieldstranslations:
+        type: fields
+        fields:
+          translations:
+            translate: false
+            type: structure
+            fields:
+              english:
+                type: text
+                label: English
+              german:
+                type: text
+                label: German

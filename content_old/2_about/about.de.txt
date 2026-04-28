@@ -1,0 +1,13 @@
+Title: About
+
+----
+
+Abouttext: 
+
+----
+
+Imprintheading: Imprint and Privacy Policy
+
+----
+
+Imprint: 
