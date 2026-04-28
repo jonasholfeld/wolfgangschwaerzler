@@ -43,7 +43,7 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
-    height: var(--nav-height);
+    // height: var(--nav-height);
     background: transparent;
     pointer-events: none;
     padding: 0 var(--page-padding);
@@ -60,6 +60,18 @@ body {
 
 .site-shell[data-view='index'] .site-nav {
     transform: translate3d(-100vw, 0, 0);
+}
+
+.site-shell.nav-is-hidden[data-view='about'] .site-nav {
+    transform: translate3d(30vw, -120%, 0);
+}
+
+.site-shell.nav-is-hidden[data-view='home'] .site-nav {
+    transform: translate3d(0, -120%, 0);
+}
+
+.site-shell.nav-is-hidden[data-view='index'] .site-nav {
+    transform: translate3d(-100vw, -120%, 0);
 }
 
 .site-nav__side {
@@ -85,6 +97,18 @@ body {
 
 .site-shell[data-view='index'] .site-nav__side--right {
     transform: translate3d(100vw, 0, 0);
+}
+
+.site-shell.nav-is-hidden[data-view='about'] .site-nav__side--right {
+    transform: translate3d(-30vw, -120%, 0);
+}
+
+.site-shell.nav-is-hidden[data-view='home'] .site-nav__side--right {
+    transform: translate3d(0, -120%, 0);
+}
+
+.site-shell.nav-is-hidden[data-view='index'] .site-nav__side--right {
+    transform: translate3d(100vw, -120%, 0);
 }
 
 .site-nav__languages {
@@ -206,6 +230,7 @@ body {
     overflow-x: hidden;
     align-items: flex-start;
     padding-left: var(--page-padding);
+    height: 4.8rem;
 }
 
 .project-card__meta-box {
@@ -324,7 +349,7 @@ body {
     --slideshow-image-height: 100;
     display: block;
     width: auto;
-    height: calc(var(--slideshow-image-height) * 0.96vh - 4rem);
+    height: calc(var(--slideshow-image-height) * 0.96vh - 5rem);
 }
 
 // .project-card__image--landscape {
@@ -480,6 +505,18 @@ main {
         transform: translate3d(100vw, 0, 0);
     }
 
+    .site-shell.nav-is-hidden[data-view='about'] .site-nav__side--right {
+        transform: translate3d(-70vw, -120%, 0);
+    }
+
+    .site-shell.nav-is-hidden[data-view='home'] .site-nav__side--right {
+        transform: translate3d(0, -120%, 0);
+    }
+
+    .site-shell.nav-is-hidden[data-view='index'] .site-nav__side--right {
+        transform: translate3d(100vw, -120%, 0);
+    }
+
     .site-shell[data-view='about'] .site-nav {
         transform: translate3d(70vw, 0, 0);
     }
@@ -490,6 +527,18 @@ main {
 
     .site-shell[data-view='index'] .site-nav {
         transform: translate3d(-100vw, 0, 0);
+    }
+
+    .site-shell.nav-is-hidden[data-view='about'] .site-nav {
+        transform: translate3d(70vw, -120%, 0);
+    }
+
+    .site-shell.nav-is-hidden[data-view='home'] .site-nav {
+        transform: translate3d(0, -120%, 0);
+    }
+
+    .site-shell.nav-is-hidden[data-view='index'] .site-nav {
+        transform: translate3d(-100vw, -120%, 0);
     }
 
     .panel--about {

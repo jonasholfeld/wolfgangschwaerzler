@@ -161,6 +161,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const slideshowFrames = document.querySelectorAll('.project-card__slideshow-frame');
+    const homePanel = document.querySelector('.panel--home');
+    let navScrollState = null;
+
+    const applyNavVisibility = () => {
+        if (!navScrollState || !homePanel) {
+            return;
+        }
+
+        const nearTop = homePanel.scrollTop <= 8;
+        const shouldHide = navScrollState.isScrollingDown && !nearTop && !navScrollState.isPointerNearTop;
+        shell.classList.toggle('nav-is-hidden', shouldHide);
+    };
+
+    const forceHideNavigation = () => {
+        if (!navScrollState || !homePanel) {
+            return;
+        }
+
+        navScrollState.isScrollingDown = true;
+        navScrollState.lastScrollY = homePanel.scrollTop;
+        applyNavVisibility();
+    };
 
     const slideshowItems = (slideshow) => Array.from(slideshow.querySelectorAll('[data-slideshow-item]'));
 
@@ -194,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return activeIndex;
     };
 
-    const scrollSlideshowToIndex = (slideshow, index) => {
+    const scrollSlideshowToIndex = (slideshow, index, behavior = 'smooth') => {
         const items = slideshowItems(slideshow);
         const targetItem = items[index];
 
@@ -207,8 +229,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
         slideshow.scrollTo({
             left: targetLeft,
-            behavior: 'smooth',
+            behavior,
         });
+    };
+
+    const projectCards = Array.from(document.querySelectorAll('.project-card'));
+
+    const visibleProjectCard = () => {
+        if (projectCards.length === 0) {
+            return null;
+        }
+
+        const viewportCenter = window.innerHeight / 2;
+        let bestCard = projectCards[0];
+        let bestDistance = Number.POSITIVE_INFINITY;
+
+        projectCards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.top + (rect.height / 2);
+            const distance = Math.abs(cardCenter - viewportCenter);
+
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                bestCard = card;
+            }
+        });
+
+        return bestCard;
+    };
+
+    const goToAdjacentProject = (frame, direction) => {
+        const currentCard = frame.closest('.project-card');
+
+        if (!currentCard) {
+            return false;
+        }
+
+        const currentCardIndex = projectCards.indexOf(currentCard);
+        const targetCard = projectCards[currentCardIndex + direction];
+
+        if (!targetCard) {
+            return false;
+        }
+
+        targetCard.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+
+        return true;
     };
 
     slideshowFrames.forEach((frame) => {
@@ -257,14 +326,129 @@ document.addEventListener('DOMContentLoaded', () => {
                 const nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + direction));
 
                 if (nextIndex === currentIndex) {
+                    if (direction > 0) {
+                        forceHideNavigation();
+                    }
+                    goToAdjacentProject(frame, direction);
                     return;
                 }
 
+                if (direction > 0) {
+                    forceHideNavigation();
+                }
                 scrollSlideshowToIndex(slideshow, nextIndex);
                 window.setTimeout(updateCounter, 300);
             });
         });
     });
+
+    document.addEventListener('keydown', (event) => {
+        if (shell.dataset.view !== 'home') {
+            return;
+        }
+
+        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+            return;
+        }
+
+        const focusedTagName = document.activeElement?.tagName;
+        if (focusedTagName === 'INPUT' || focusedTagName === 'TEXTAREA' || document.activeElement?.isContentEditable) {
+            return;
+        }
+
+        const currentCard = visibleProjectCard();
+        const currentFrame = currentCard?.querySelector('.project-card__slideshow-frame');
+        const currentSlideshow = currentFrame?.querySelector('[data-slideshow]');
+
+        if (!currentCard || !currentFrame || !currentSlideshow) {
+            return;
+        }
+
+        event.preventDefault();
+
+        if (event.key === 'ArrowUp') {
+            goToAdjacentProject(currentFrame, -1);
+            return;
+        }
+
+        if (event.key === 'ArrowDown') {
+            forceHideNavigation();
+            goToAdjacentProject(currentFrame, 1);
+            return;
+        }
+
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        const currentIndex = activeSlideshowIndex(currentSlideshow);
+        const items = slideshowItems(currentSlideshow);
+
+        if (currentIndex === -1 || items.length === 0) {
+            return;
+        }
+
+        const nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + direction));
+
+        if (nextIndex === currentIndex) {
+            if (direction > 0) {
+                forceHideNavigation();
+            }
+            goToAdjacentProject(currentFrame, direction);
+            return;
+        }
+
+        if (direction > 0) {
+            forceHideNavigation();
+        }
+        scrollSlideshowToIndex(currentSlideshow, nextIndex);
+    });
+
+    if (homePanel) {
+        const minScrollDelta = 8;
+        const pointerRevealThreshold = window.innerWidth * 0.03;
+        let ticking = false;
+
+        navScrollState = {
+            lastScrollY: homePanel.scrollTop,
+            isScrollingDown: false,
+            isPointerNearTop: false,
+        };
+
+        const updateNavVisibilityFromScroll = () => {
+            if (!navScrollState) {
+                return;
+            }
+
+            const currentScrollY = homePanel.scrollTop;
+            const delta = currentScrollY - navScrollState.lastScrollY;
+
+            if (Math.abs(delta) >= minScrollDelta) {
+                navScrollState.isScrollingDown = delta > 0;
+                navScrollState.lastScrollY = currentScrollY;
+            }
+
+            applyNavVisibility();
+            ticking = false;
+        };
+
+        homePanel.addEventListener('scroll', () => {
+            if (ticking) {
+                return;
+            }
+
+            ticking = true;
+            window.requestAnimationFrame(updateNavVisibilityFromScroll);
+        }, { passive: true });
+
+        window.addEventListener('mousemove', (event) => {
+            if (!navScrollState) {
+                return;
+            }
+
+            navScrollState.isPointerNearTop = event.clientY <= pointerRevealThreshold;
+            applyNavVisibility();
+        }, { passive: true });
+
+        applyNavVisibility();
+    }
 
     const indexFilter = document.querySelector('[data-index-filter]');
 
